@@ -25,7 +25,7 @@ You can install the task via FRENDS UI Task View or you can find the nuget packa
 #### SendMessage Input
 Property | Type | Description | Example (comma separated)
 ---------|------|-------------|--------
-QueueUrl | string | https://{REGION_ENDPOINT}/queue.|api-domain|/{YOUR_ACCOUNT_NUMBER}/{YOUR_QUEUE_NAME} | 
+QueueUrl | string | ``https://{REGION_ENDPOINT}/queue.|api-domain|/{YOUR_ACCOUNT_NUMBER}/{YOUR_QUEUE_NAME} |``
 Message | string | Message content | 
 
 
