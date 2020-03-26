@@ -1,76 +1,71 @@
 # Frends.Community.AWS.SQS
-Frends tasks to handle AWS SQS operations. For example, send message into queue.
-***
+
+FRENDS Community Task for SQS
+
+<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+ [![Actions Status](https://github.com/CommunityHiQ/Frends.Community.AWS.SQS/workflows/PackAndPushAfterMerge/badge.svg)](https://github.com/CommunityHiQ/Frends.Community.AWS.SQS/actions) ![MyGet](https://img.shields.io/myget/frends-community/v/Frends.Community.AWS.SQS) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
+
 - [Installing](#installing)
 - [Tasks](#tasks)
-  - [SendMessage](#sendmessage)
-    - [SendMessage Input](#sendmessage-input)
-    - [SendMessage Parameters](#sendmessage-parameters)
-	- [SendMessage Options](#sendmessage-options)
-    - [endMessage Result](#sendmessage-result)
-- [License](#license)
-- [Building from source](#building-from-source)
+     - [SQS](#SQS)
+- [Building](#building)
 - [Contributing](#contributing)
-- [Changelog](#changelog)
+- [Change Log](#change-log)
 
-***
-## Installing
-You can install the task via FRENDS UI Task View or you can find the nuget package from the following nuget feed
-'[https://www.myget.org/F/frends/api/v2](https://www.myget.org/F/frends/api/v2)'
-***
-## Tasks
+# Installing
 
-### SendMessage
+You can install the task via FRENDS UI Task View or you can find the NuGet package from the following NuGet feed
+https://www.myget.org/F/frends-community/api/v3/index.json and in Gallery view in MyGet https://www.myget.org/feed/frends-community/package/nuget/Frends.Community.AWS.SQS
 
-#### SendMessage Input
-Property | Type | Description | Example (comma separated)
----------|------|-------------|--------
-QueueUrl | string | https://{REGION_ENDPOINT}/queue.\|api-domain\|/{YOUR_ACCOUNT_NUMBER}/{YOUR_QUEUE_NAME} |
-Message | string | Message content | 
+# Tasks
 
+## SQS
 
-#### SendMessage Parameters
-Property | Type | Description | Example (comma separated)
----------|------|-------------|--------
-AWSAccessKeyID | String (secret) | SQS Access Key, #env-variable use is encouraged. | AKIAIOSFODNN7EXAMPLE
-AWSSecretAccessKey | String (secret) | SQS Access Key, #env-variable use is encouraged. | wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-AwsCredentials | dynamic | Used ONLY for GetTemporaryCredentialsTask result. If set, other keys are ignored. | #result[Get Temporary Credentials]
-Region | Selector | Location for SQS, select from dropdown-list. | EUWest1
+Repeats message
 
-#### SendMessage Options
-Property | Type | Description | Example (comma separated)
----------|------|-------------|--------
-MessageGroupID | string | https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html | 7
-MessageDeduplicationID  | string |  https://docs.aws.amazon.com/AWSSimpleQueueService/latest/APIReference/API_SendMessage.html | System.Guid.NewGuid().ToString()
+### Properties
 
-#### SendMessage Result
-Property | Type | Description | Example (comma separated)
----------|------|-------------|--------
-Result | dynamic SendMessageResponse | https://docs.aws.amazon.com/sdkfornet/latest/apidocs/items/TSQSSendMessageResponseNET45.html | 
-***
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| Message | `string` | Some string that will be repeated. | `foo` |
 
-## License
-MIT License.
-***
-## Building from source
+### Options
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| Amount | `int` | Amount how many times message is repeated. | `3` |
+| Delimiter | `string` | Character(s) used between replications. | `, ` |
+
+### Returns
+
+A result object with parameters.
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| Replication | `string` | Repeated string. | `foo, foo, foo` |
+
+Usage:
+To fetch result use syntax:
+
+`#result.Replication`
+
+# Building
 
 Clone a copy of the repo
 
 `git clone https://github.com/CommunityHiQ/Frends.Community.AWS.SQS.git`
 
-Restore dependencies
-
-`nuget restore frends.community.aws.sqs`
-
 Rebuild the project
 
-Run Tests with nunit3. Tests can be found under
+`dotnet build`
 
-`Frends.Community.AWS.Tests\bin\Release\Frends.Community.AWS.SQS.Tests.dll`
+Run Tests
 
-Create a nuget package
+`dotnet test`
 
-`nuget pack nuspec/Frends.Community.AWS.SQS.nuspec`
+Create a NuGet package
+
+`dotnet pack --configuration Release`
 
 # Contributing
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
@@ -83,8 +78,8 @@ When contributing to this repository, please first discuss the change you wish t
 
 NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 
-# Changelog
+# Change Log
 
-| Version             | Changes              |
-| --------------------| ---------------------|
-| pre 0.0.15 | first commit  |
+| Version | Changes |
+| ------- | ------- |
+| 1.0.0   | First .NET Standard version |
