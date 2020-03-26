@@ -1,3 +1,5 @@
+using Amazon.Runtime;
+using Amazon.SQS.Model;
 using NUnit.Framework;
 
 namespace Frends.Community.AWS.SQS.Tests
@@ -8,20 +10,30 @@ namespace Frends.Community.AWS.SQS.Tests
         [Test]
         public void ThreeSQSs()
         {
+            var accessKey = "";
+            var secretKey = "";
+
             var input = new Parameters
             {
                 Message = "foobar",
             };
 
-            var options = new Options
+            var options = new SendOptions
             {
-                Amount = 3,
-                Delimiter = ", "
+                DelaySeconds = 0,
+                MessageDeduplicationId = "",
+                MessageGroupId = ""
             };
 
-            var ret = SQS.SendMessage(input, options, new System.Threading.CancellationToken());
+            var awsOptions = new AWSOptions
+            {
+                AWSCredentials = new BasicAWSCredentials(accessKey, secretKey),
+                UseDefaultCredentials = false
+            };
 
-            Assert.That(ret.Replication, Is.EqualTo("foobar, foobar, foobar"));
+            var ret = SQS.SendMessage(input, options, awsOptions, new System.Threading.CancellationToken());
+
+            Assert.IsTrue(((SendMessageResponse)ret.Result).HttpStatusCode == System.Net.HttpStatusCode.OK);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿#pragma warning disable 1591
 
+using Amazon;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace Frends.Community.AWS.SQS
@@ -10,35 +12,97 @@ namespace Frends.Community.AWS.SQS
     public class Parameters
     {
         /// <summary>
-        /// Something that will be repeated.
+        /// Queue url.
+        /// Examples: https://{REGION_ENDPOINT}/queue.|api-domain|/{YOUR_ACCOUNT_NUMBER}/{YOUR_QUEUE_NAME}
+        /// </summary>
+        [DisplayFormat(DataFormatString = "Text")]
+        [DefaultValue("https://{REGION_ENDPOINT}/queue.|api-domain|/{YOUR_ACCOUNT_NUMBER}/{YOUR_QUEUE_NAME}")]
+        public string QueueUrl { get; set; }
+
+        /// <summary>
+        ///  Message to be sent. Maximum size is 256kb
+        ///  Examples: foo;12345
         /// </summary>
         [DisplayFormat(DataFormatString = "Text")]
         public string Message;
     }
 
     /// <summary>
+    /// Options
+    /// </summary>
+    [DisplayName("Options")]
+    public class SendOptions
+    {
+        /// <summary>
+        /// The tag that specifies that a message belongs to a specific message group. (FIFO)
+        /// </summary>
+        [DisplayName("MessageGroupId")]
+        [DefaultValue("")]
+        public string MessageGroupId { get; set; }
+
+        /// <summary>
+        /// MessageDeduplicationId (FIFO)
+        /// </summary>
+        [DisplayName("MessageDeduplicationId")]
+        [DefaultValue("")]
+        public string MessageDeduplicationId { get; set; }
+
+        /// <summary>
+        /// The number of seconds to delay the message from being available for processing. 
+        /// </summary>
+        [DefaultValue(9)]
+        public int DelaySeconds { get; set; }
+    }
+
+    /// <summary>
     /// Options class provides additional parameters.
     /// </summary>
-    public class Options
+    public class AWSOptions
     {
         /// <summary>
-        /// Number of times input is echoed.
+        ///     Region selection, default EUWest1.
         /// </summary>
-        public int Amount;
+        [DisplayName("Region")]
+        public Regions Region { get; set; }
 
         /// <summary>
-        /// How repeats of input are separated.
+        /// Credentials are loaded from the application's default configuration, and if unsuccessful from the Instance Profile service on an EC2 instance. 
         /// </summary>
-        [DisplayFormat(DataFormatString = "Text")]
-        public string Delimiter;
+        public bool UseDefaultCredentials;
+
+        /// <summary>
+        /// AWSCredentials class instance. See https://docs.aws.amazon.com/sdkfornet1/latest/apidocs/html/T_Amazon_Runtime_AWSCredentials.htm
+        /// </summary>
+        [DisplayFormat(DataFormatString = "expression")]
+        public Amazon.Runtime.AWSCredentials AWSCredentials;
     }
 
-    public class Result
+    #region Enumerations
+
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    public enum Regions
     {
-        /// <summary>
-        /// Contains input repeated specified times.
-        /// </summary>
-        [DisplayFormat(DataFormatString = "Text")]
-        public string Replication;
+        Default,
+        EuWest1,
+        EuWest2,
+        EUWest3,
+        EuCentral1,
+        ApNortheast1,
+        ApNortheast2,
+        ApSouth1,
+        ApSoutheast1,
+        ApSoutheast2,
+        CaCentral1,
+        CnNorth1,
+        CNNorthWest1,
+        SaEast1,
+        UsEast1,
+        UsEast2,
+        UsWest1,
+        UsWest2
     }
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+    
+    #endregion
 }
+
