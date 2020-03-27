@@ -47,9 +47,9 @@ namespace Frends.Community.AWS.SQS
         /// <param name="awsOptions">AWS options</param>
         /// <param name="cancellationToken"></param>
         /// <returns>{string Replication} </returns>
-        public static async Task<object> SendMessage([PropertyTab]Parameters input, [PropertyTab]SendOptions options, [PropertyTab] AWSOptions awsOptions, CancellationToken cancellationToken)
+        public static async Task<dynamic> SendMessage([PropertyTab]Parameters input, [PropertyTab]SendOptions options, [PropertyTab] AWSOptions awsOptions, CancellationToken cancellationToken)
         {
-            var sqsClient = GetAmazonSQSClient(awsOptions.UseDefaultCredentials, (AWSCredentials)awsOptions.AWSCredentials, awsOptions.Region);
+            var sqsClient = GetAmazonSQSClient(awsOptions.UseDefaultCredentials, awsOptions.AWSCredentials, awsOptions.Region);
 
             var request = new SendMessageRequest
             {
@@ -86,7 +86,7 @@ namespace Frends.Community.AWS.SQS
         /// <param name="accessKey">Access key</param>
         /// <param name="secretKey">Secret key</param>
         /// <returns></returns>
-        public static object GetBasicAWSCredentials(string accessKey, [PasswordPropertyText] string secretKey)
+        public static dynamic GetBasicAWSCredentials(string accessKey, [PasswordPropertyText] string secretKey)
         {
             return new BasicAWSCredentials(accessKey, secretKey);
         }

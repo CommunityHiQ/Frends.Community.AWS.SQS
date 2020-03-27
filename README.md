@@ -36,7 +36,7 @@ A BasicAWSCredentials object instance
 
 | Property | Type | Description | Example |
 | -------- | -------- | -------- | -------- |
-| value | `object` | See https://docs.aws.amazon.com/sdkfornet1/latest/apidocs/html/T_Amazon_Runtime_BasicAWSCredentials.htm |  |
+| value | `dynamic` | See https://docs.aws.amazon.com/sdkfornet1/latest/apidocs/html/T_Amazon_Runtime_BasicAWSCredentials.htm |  |
 
 Use return value later for task inputs.
 
@@ -69,7 +69,7 @@ Sends a message to the AWS SQS queue.
 | -------- | -------- | -------- | -------- |
 | Region | `enum` | Region selection, default EUNorth1. Undefined doesn't select region. | `1` |
 | UseDefaultCredentials | `bool` |  Credentials are loaded from the application's default configuration, and if unsuccessful from the Instance Profile service on an EC2 instance.  | false |
-| AWSCredentials | `AWSCredentials` | AWSCredentials class instance. See https://docs.aws.amazon.com/sdkfornet1/latest/apidocs/html/T_Amazon_Runtime_AWSCredentials.htm. Can be null (see UseDefaultCredentials)  | `#result[GetBasicAWSCredentials]` |
+| AWSCredentials | `dynamic` | AWSCredentials class instance. See https://docs.aws.amazon.com/sdkfornet1/latest/apidocs/html/T_Amazon_Runtime_AWSCredentials.htm. Can be null (see UseDefaultCredentials)  | `#result[GetBasicAWSCredentials]` |
 
 ### Returns
 
@@ -77,7 +77,7 @@ A SendMessageResponse object instance
 
 | Property | Type | Description | Example |
 | -------- | -------- | -------- | -------- |
-| value | `object` | See https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/SQS/TSendMessageResponse.html |  |
+| value | `dynamic` | See https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/SQS/TSendMessageResponse.html |  |
 
 Usage:
 Convert return value to JToken and use properties:

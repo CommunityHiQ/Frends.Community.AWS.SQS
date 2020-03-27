@@ -46,7 +46,7 @@ Datetime: {DateTime.Now.ToString("o")}
 
             var awsOptions = new AWSOptions
             {
-                AWSCredentials = (BasicAWSCredentials)SQS.GetBasicAWSCredentials(accessKey, secretKey),
+                AWSCredentials = SQS.GetBasicAWSCredentials(accessKey, secretKey),
                 UseDefaultCredentials = false,
                 Region = region
             };

@@ -77,7 +77,7 @@ namespace Frends.Community.AWS.SQS
         /// </summary>
         [DisplayFormat(DataFormatString = "Expression")]
         [PasswordPropertyText]
-        public object AWSCredentials { get; set; }
+        public dynamic AWSCredentials { get; set; }
     }
 
     #region Enumerations
