@@ -22,6 +22,9 @@ namespace Frends.Community.AWS.SQS.Tests
             region = (Regions)int.Parse(GetConfigValue("AWS.SQS.aws_sqs_region"));
         }
 
+        /// <summary>
+        /// Send a message to the FIFO queue
+        /// </summary>
         [Test]
         public void SendMessage()
         {
@@ -53,6 +56,11 @@ Datetime: {DateTime.Now.ToString("o")}
             Assert.IsTrue(((SendMessageResponse)ret.Result).HttpStatusCode == System.Net.HttpStatusCode.OK);
         }
 
+        /// <summary>
+        /// Get env value
+        /// </summary>
+        /// <param name="name">Name</param>
+        /// <returns>Value</returns>
         private string GetConfigValue(string name)
         {
             return Environment.GetEnvironmentVariable(name);

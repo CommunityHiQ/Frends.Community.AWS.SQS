@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Frends.Community.AWS.SQS
 {
     /// <summary>
-    /// Parameters class usually requires parameters that are required.
+    /// Message parameters
     /// </summary>
     public class Parameters
     {
@@ -30,7 +30,7 @@ namespace Frends.Community.AWS.SQS
     }
 
     /// <summary>
-    /// Options
+    /// Message options
     /// </summary>
     [DisplayName("Options")]
     public class SendOptions
@@ -57,12 +57,12 @@ namespace Frends.Community.AWS.SQS
     }
 
     /// <summary>
-    /// Options class provides additional parameters.
+    /// AWS Options
     /// </summary>
     public class AWSOptions
     {
         /// <summary>
-        ///     Region selection, default EUWest1.
+        /// Region selection, default EUNorth1. Undefined doesn't select region.
         /// </summary>
         [DisplayName("Region")]
         public Regions Region { get; set; }
@@ -85,6 +85,7 @@ namespace Frends.Community.AWS.SQS
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public enum Regions
     {
+        EUNorth1,
         EuWest1,
         EuWest2,
         EUWest3,

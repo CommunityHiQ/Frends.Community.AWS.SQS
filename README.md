@@ -6,7 +6,8 @@ FRENDS Community Task for SQS
 
 - [Installing](#installing)
 - [Tasks](#tasks)
-     - [SQS](#SQS)
+     - [GetBasicAWSCredentials](#GetBasicAWSCredentials)
+     - [SendMessage](#SendMessage)
 - [Building](#building)
 - [Contributing](#contributing)
 - [Change Log](#change-log)
@@ -18,35 +19,71 @@ https://www.myget.org/F/frends-community/api/v3/index.json and in Gallery view i
 
 # Tasks
 
-## SQS
+## GetBasicAWSCredentials
 
-Repeats message
+Gets a new BasicAWSCredentials object instance.
 
-### Properties
+### Parameters
 
 | Property | Type | Description | Example |
 | -------- | -------- | -------- | -------- |
-| Message | `string` | Some string that will be repeated. | `foo` |
+| AccessKey  | `string` | AWS Access key | `AKIAIOSFODNN7EXAMPLE` |
+| SecretKey | `string` | AWS Secret key | `wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY` |
+
+### Returns
+
+A BasicAWSCredentials object instance
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| value | `object` | See https://docs.aws.amazon.com/sdkfornet1/latest/apidocs/html/T_Amazon_Runtime_BasicAWSCredentials.htm |  |
+
+Use return value later for task inputs.
+
+`#result`
+
+
+## SendMessage
+
+Sends a message to the AWS SQS queue.
+
+### Parameters
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| QueueUrl  | `string` | Queue URL | `https://sqs.us-east-2.amazonaws.com/1234567890123/Test1.fifo` |
+| Message | `string` | Message content | `Hello world` |
 
 ### Options
 
 | Property | Type | Description | Example |
 | -------- | -------- | -------- | -------- |
-| Amount | `int` | Amount how many times message is repeated. | `3` |
-| Delimiter | `string` | Character(s) used between replications. | `, ` |
+| MessageGroupId | `string` | The tag that specifies that a message belongs to a specific message group. (FIFO)  | `123` |
+| MessageDeduplicationId | `string` | Deduplication ID. If a message with a particular message deduplication ID is sent successfully, any messages sent with the same message deduplication ID are accepted successfully but aren't delivered during the 5-minute deduplication interval.   | `45678` |
+| DelaySeconds | `int` | How many seconds before the message is visible in the queue. The maximum is 15 minutes. | `0` |
 
-### Returns
 
-A result object with parameters.
+### AWSOptions
 
 | Property | Type | Description | Example |
 | -------- | -------- | -------- | -------- |
-| Replication | `string` | Repeated string. | `foo, foo, foo` |
+| Region | `enum` | Region selection, default EUNorth1. Undefined doesn't select region. | `1` |
+| UseDefaultCredentials | `bool` |  Credentials are loaded from the application's default configuration, and if unsuccessful from the Instance Profile service on an EC2 instance.  | false |
+| AWSCredentials | `AWSCredentials` | AWSCredentials class instance. See https://docs.aws.amazon.com/sdkfornet1/latest/apidocs/html/T_Amazon_Runtime_AWSCredentials.htm. Can be null (see UseDefaultCredentials)  | `#result[GetBasicAWSCredentials]` |
+
+### Returns
+
+A SendMessageResponse object instance
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| value | `object` | See https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/SQS/TSendMessageResponse.html |  |
 
 Usage:
-To fetch result use syntax:
+Convert return value to JToken and use properties:
 
-`#result.Replication`
+`JToken.FromObject(#result)`, `#var.varJToken["HttpStatusCode"]`
+
 
 # Building
 

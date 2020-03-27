@@ -95,6 +95,8 @@ namespace Frends.Community.AWS.SQS
         {
             switch (region)
             {
+                case Regions.EUNorth1:
+                    return RegionEndpoint.EUNorth1;
                 case Regions.EuWest1:
                     return RegionEndpoint.EUWest1;
                 case Regions.EuWest2:
@@ -131,7 +133,7 @@ namespace Frends.Community.AWS.SQS
                     return RegionEndpoint.USWest2;
 
                 default:
-                    return RegionEndpoint.EUWest1;
+                    return RegionEndpoint.EUNorth1;
             }
         }
     }
