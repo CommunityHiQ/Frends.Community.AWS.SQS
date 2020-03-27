@@ -8,13 +8,23 @@ namespace Frends.Community.AWS.SQS.Tests
     [TestFixture]
     class TestClass
     {
+        private string accessKey;
+        private string secretKey;
+        private string queueURL;
+        private Regions region;
+
+        [SetUp]
+        public void Init()
+        {
+            accessKey = GetConfigValue("AWS.SQS.aws_access_key_id");
+            secretKey = GetConfigValue("AWS.SQS.aws_secret_access_key");
+            queueURL = GetConfigValue("AWS.SQS.aws_sqs_queue");
+            region = (Regions)int.Parse(GetConfigValue("AWS.SQS.aws_sqs_region"));
+        }
+
         [Test]
         public void SendMessage()
         {
-            var accessKey = GetConfigValue("aws_access_key_id");
-            var secretKey = GetConfigValue("aws_secret_access_key");
-            var queueURL = GetConfigValue("aws_sqs_queue");
-            var region = (Regions) int.Parse(GetConfigValue("aws_sqs_region"));
 
             var input = new Parameters
             {
@@ -33,7 +43,7 @@ Datetime: {DateTime.Now.ToString("o")}
 
             var awsOptions = new AWSOptions
             {
-                AWSCredentials = SQS.GetBasicAWSCredentials(accessKey, secretKey),
+                AWSCredentials = (BasicAWSCredentials)SQS.GetBasicAWSCredentials(accessKey, secretKey),
                 UseDefaultCredentials = false,
                 Region = region
             };

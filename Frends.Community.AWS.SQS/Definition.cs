@@ -1,6 +1,7 @@
 ﻿#pragma warning disable 1591
 
 using Amazon;
+using Amazon.Runtime;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -24,7 +25,8 @@ namespace Frends.Community.AWS.SQS
         ///  Examples: foo;12345
         /// </summary>
         [DisplayFormat(DataFormatString = "Text")]
-        public string Message;
+        [DefaultValue("Hello")]
+        public string Message { get; set; }
     }
 
     /// <summary>
@@ -50,7 +52,7 @@ namespace Frends.Community.AWS.SQS
         /// <summary>
         /// The number of seconds to delay the message from being available for processing. 
         /// </summary>
-        [DefaultValue(9)]
+        [DefaultValue(0)]
         public int DelaySeconds { get; set; }
     }
 
@@ -68,13 +70,14 @@ namespace Frends.Community.AWS.SQS
         /// <summary>
         /// Credentials are loaded from the application's default configuration, and if unsuccessful from the Instance Profile service on an EC2 instance. 
         /// </summary>
-        public bool UseDefaultCredentials;
+        public bool UseDefaultCredentials { get; set; }
 
         /// <summary>
         /// AWSCredentials class instance. See https://docs.aws.amazon.com/sdkfornet1/latest/apidocs/html/T_Amazon_Runtime_AWSCredentials.htm
         /// </summary>
-        [DisplayFormat(DataFormatString = "expression")]
-        public Amazon.Runtime.AWSCredentials AWSCredentials;
+        [DisplayFormat(DataFormatString = "Expression")]
+        [PasswordPropertyText]
+        public object AWSCredentials { get; set; }
     }
 
     #region Enumerations
