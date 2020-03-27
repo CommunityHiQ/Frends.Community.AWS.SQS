@@ -2,7 +2,6 @@
 
 FRENDS Community Task for SQS
 
-<li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
  [![Actions Status](https://github.com/CommunityHiQ/Frends.Community.AWS.SQS/workflows/PackAndPushAfterMerge/badge.svg)](https://github.com/CommunityHiQ/Frends.Community.AWS.SQS/actions) ![MyGet](https://img.shields.io/myget/frends-community/v/Frends.Community.AWS.SQS) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
 
 - [Installing](#installing)

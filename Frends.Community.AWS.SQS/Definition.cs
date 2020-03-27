@@ -82,7 +82,6 @@ namespace Frends.Community.AWS.SQS
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public enum Regions
     {
-        Default,
         EuWest1,
         EuWest2,
         EUWest3,
@@ -99,7 +98,8 @@ namespace Frends.Community.AWS.SQS
         UsEast1,
         UsEast2,
         UsWest1,
-        UsWest2
+        UsWest2,
+        Undefined
     }
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     

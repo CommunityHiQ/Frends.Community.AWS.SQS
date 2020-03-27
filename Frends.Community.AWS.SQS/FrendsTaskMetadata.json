@@ -2,6 +2,9 @@
 	"Tasks": [
 		{
 			"TaskMethod": "Frends.Community.AWS.SQS.SQS.SendMessage"
+		},
+		{
+			"TaskMethod": "Frends.Community.AWS.SQS.SQS.GetBasicAWSCredentials"
 		}
 	]
 }

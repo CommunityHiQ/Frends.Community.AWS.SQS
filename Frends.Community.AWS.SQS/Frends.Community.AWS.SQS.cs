@@ -17,7 +17,7 @@ namespace Frends.Community.AWS.SQS
             // App.config or EC2 instance credentials?
             if( useDefaultCredentials == true )
             {
-                if( region == Regions.Default)
+                if( region == Regions.Undefined)
                 {
                     return new AmazonSQSClient();
                 } else
@@ -26,7 +26,7 @@ namespace Frends.Community.AWS.SQS
                 }
             } else
             {
-                if (region == Regions.Default)
+                if (region == Regions.Undefined)
                 {
                     return new AmazonSQSClient(awsCredentials);
                 }
@@ -77,9 +77,18 @@ namespace Frends.Community.AWS.SQS
             }
 
             return await sqsClient.SendMessageAsync(request, cancellationToken);
-
         }
 
+        /// <summary>
+        /// Get basic set of credentials consisting of an AccessKey and SecretKey 
+        /// </summary>
+        /// <param name="accessKey">Access key</param>
+        /// <param name="secretKey">Secret key</param>
+        /// <returns></returns>
+        public static BasicAWSCredentials GetBasicAWSCredentials(string accessKey, string secretKey)
+        {
+            return new BasicAWSCredentials(accessKey, secretKey);
+        }
 
         private static RegionEndpoint RegionSelection(Regions region)
         {
