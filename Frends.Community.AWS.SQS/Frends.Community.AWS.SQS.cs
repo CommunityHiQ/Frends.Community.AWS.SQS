@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Amazon;
@@ -39,15 +40,14 @@ namespace Frends.Community.AWS.SQS
         }
 
         /// <summary>
-        /// This is task
-        /// Documentation: https://github.com/CommunityHiQ/Frends.Community.AWS.SQS
+        /// Sends a message to the AWS Simple Queue Service
         /// </summary>
         /// <param name="input">Message data</param>
         /// <param name="options">Message options</param>
         /// <param name="awsOptions">AWS options</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>{string Replication} </returns>
-        public static async Task<dynamic> SendMessage([PropertyTab]Parameters input, [PropertyTab]SendOptions options, [PropertyTab] AWSOptions awsOptions, CancellationToken cancellationToken)
+        /// <returns>{SendMessageResponse} </returns>
+        public static async Task<dynamic> SendMessage([PropertyTab]SendParameters input, [PropertyTab]SendOptions options, [PropertyTab] AWSOptions awsOptions, CancellationToken cancellationToken)
         {
             var sqsClient = GetAmazonSQSClient(awsOptions.UseDefaultCredentials, awsOptions.AWSCredentials, awsOptions.Region);
 
@@ -77,7 +77,50 @@ namespace Frends.Community.AWS.SQS
                 request.MessageDeduplicationId = options.MessageDeduplicationId;
             }
 
+            // https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/SQS/TSendMessageResponse.html
             return await sqsClient.SendMessageAsync(request, cancellationToken);
+        }
+
+        /// <summary>
+        /// Receives message(s) from the AWS Simple Queue Service
+        /// </summary>
+        /// <param name="input">Receive parameters</param>
+        /// <param name="options">Receive options</param>
+        /// <param name="awsOptions">AWS options</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>ReceiveMessageResponse</returns>
+        public static async Task<dynamic> ReceiveMessage([PropertyTab] ReceiveParameters input, [PropertyTab]ReceiveOptions options, [PropertyTab] AWSOptions awsOptions, CancellationToken cancellationToken)
+        {
+            var sqsClient = GetAmazonSQSClient(awsOptions.UseDefaultCredentials, awsOptions.AWSCredentials, awsOptions.Region);
+
+            var request = new ReceiveMessageRequest
+            {
+                AttributeNames = new List<string>() { "All" },
+                MaxNumberOfMessages = input.MaxNumberOfMessages,
+                QueueUrl = input.QueueUrl,
+                VisibilityTimeout = options.VisibilityTimeout,
+                WaitTimeSeconds = options.WaitTimeSeconds
+            };
+
+            // https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/SQS/TReceiveMessageResponse.html
+            var response = await sqsClient.ReceiveMessageAsync(request, cancellationToken);
+
+            // Remove messages after receiving?
+            if (response.Messages.Count > 0 && options.DeleteMessageAfterReceiving)
+            {
+                foreach (var message in response.Messages)
+                {
+                    var deleteMessageRequest = new DeleteMessageRequest()
+                    {
+                        QueueUrl = input.QueueUrl,
+                        ReceiptHandle = message.ReceiptHandle
+                    };
+                    // https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/SQS/TDeleteMessageResponse.html
+                    await sqsClient.DeleteMessageAsync(deleteMessageRequest);
+                }
+            }
+
+            return response;
         }
 
         /// <summary>

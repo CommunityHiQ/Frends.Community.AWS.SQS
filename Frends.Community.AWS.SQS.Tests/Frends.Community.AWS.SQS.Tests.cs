@@ -6,7 +6,7 @@ using System;
 namespace Frends.Community.AWS.SQS.Tests
 {
     [TestFixture]
-    class TestClass
+    class BasicTests
     {
         private string accessKey;
         private string secretKey;
@@ -26,10 +26,11 @@ namespace Frends.Community.AWS.SQS.Tests
         /// Send a message to the FIFO queue
         /// </summary>
         [Test]
+        [Order(1)]
         public void SendMessage()
         {
 
-            var input = new Parameters
+            var input = new SendParameters
             {
                 QueueUrl = queueURL,
                 Message = $@"Frends.Community.AWS.SQS.Tests.SendMessage() test. 
@@ -54,6 +55,38 @@ Datetime: {DateTime.Now.ToString("o")}
             var ret = SQS.SendMessage(input, options, awsOptions, new System.Threading.CancellationToken());
 
             Assert.IsTrue(((SendMessageResponse)ret.Result).HttpStatusCode == System.Net.HttpStatusCode.OK);
+        }
+
+        [Test]
+        [Order(2)]
+        public void ReceiveMessage()
+        {
+            var input = new ReceiveParameters
+            {
+                QueueUrl = queueURL,
+                MaxNumberOfMessages = 1
+            };
+
+            var options = new ReceiveOptions
+            {
+                DeleteMessageAfterReceiving = true,
+                VisibilityTimeout = 30,
+                WaitTimeSeconds = 5
+            };
+
+            var awsOptions = new AWSOptions
+            {
+                AWSCredentials = SQS.GetBasicAWSCredentials(accessKey, secretKey),
+                UseDefaultCredentials = false,
+                Region = region
+            };
+
+            var ret = SQS.ReceiveMessage(input, options, awsOptions, new System.Threading.CancellationToken());
+
+            ReceiveMessageResponse receiveResponse = ret.Result;
+
+            Assert.IsTrue(receiveResponse.Messages.Count == 1);
+
         }
 
         /// <summary>

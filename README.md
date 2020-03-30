@@ -7,6 +7,7 @@ FRENDS Community Task for SQS
 - [Installing](#installing)
 - [Tasks](#tasks)
      - [GetBasicAWSCredentials](#GetBasicAWSCredentials)
+     - [ReceiveMessage](#ReceiveMessage)
      - [SendMessage](#SendMessage)
 - [Building](#building)
 - [Contributing](#contributing)
@@ -43,6 +44,47 @@ Use return value later for task inputs.
 `#result`
 
 
+## ReceiveMessage
+
+Receives message(s) from the AWS SQS queue.
+
+### Parameters
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| QueueUrl  | `string` | Queue URL | `https://sqs.us-east-2.amazonaws.com/1234567890123/Test1.fifo` |
+| MaxNumberOfMessages | `int` | The maximum number of messages to return. Amazon SQS never returns more messages than this value (however, fewer messages might be returned). Valid values: 1 to 10.  | `1` |
+
+### Options
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| DeleteMessageAfterReceiving | `bool` | Delete message(s) from queue after receiving it   | `true` |
+| VisibilityTimeout | `int` |  The duration (in seconds) that the received messages are hidden from subsequent retrieve requests after being retrieved by a ReceiveMessage request.   | `45678` |
+| WaitTimeSeconds | `int` | The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds. If no messages are available and the wait time expires, the call returns successfully with an empty list of messages.  | `0` |
+
+
+### AWSOptions
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| Region | `enum` | Region selection, default EUNorth1. Undefined doesn't select region. | `1` |
+| UseDefaultCredentials | `bool` |  Credentials are loaded from the application's default configuration, and if unsuccessful from the Instance Profile service on an EC2 instance.  | false |
+| AWSCredentials | `dynamic` | AWSCredentials class instance. See https://docs.aws.amazon.com/sdkfornet1/latest/apidocs/html/T_Amazon_Runtime_AWSCredentials.htm. Can be null (see UseDefaultCredentials)  | `#result[GetBasicAWSCredentials]` |
+
+### Returns
+
+A ReceiveMessageResponse object instance
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| ReceiveMessageResponse | `dynamic` | See https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/SQS/TReceiveMessageResponse.html |  |
+
+Usage:
+Convert return value to JToken and use properties:
+
+`JToken.FromObject(#result)`, `#var.varJToken["Messages"]`
+
 ## SendMessage
 
 Sends a message to the AWS SQS queue.
@@ -77,7 +119,7 @@ A SendMessageResponse object instance
 
 | Property | Type | Description | Example |
 | -------- | -------- | -------- | -------- |
-| value | `dynamic` | See https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/SQS/TSendMessageResponse.html |  |
+| SendMessageResponse | `dynamic` | See https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/SQS/TSendMessageResponse.html |  |
 
 Usage:
 Convert return value to JToken and use properties:
@@ -118,4 +160,4 @@ NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 
 | Version | Changes |
 | ------- | ------- |
-| 1.0.0   | First .NET Standard version |
+| 1.0.0   | First multiplatform version |

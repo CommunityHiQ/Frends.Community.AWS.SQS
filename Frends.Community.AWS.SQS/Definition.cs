@@ -10,7 +10,8 @@ namespace Frends.Community.AWS.SQS
     /// <summary>
     /// Message parameters
     /// </summary>
-    public class Parameters
+    [DisplayName("Parameters")]
+    public class SendParameters
     {
         /// <summary>
         /// Queue url.
@@ -78,6 +79,54 @@ namespace Frends.Community.AWS.SQS
         [DisplayFormat(DataFormatString = "Expression")]
         [PasswordPropertyText]
         public dynamic AWSCredentials { get; set; }
+    }
+
+
+    /// <summary>
+    /// Message parameters
+    /// </summary>
+    [DisplayName("Parameters")]
+    public class ReceiveParameters
+    {
+        /// <summary>
+        /// Queue url.
+        /// Examples: https://{REGION_ENDPOINT}/queue.|api-domain|/{YOUR_ACCOUNT_NUMBER}/{YOUR_QUEUE_NAME}
+        /// </summary>
+        [DisplayFormat(DataFormatString = "Text")]
+        [DefaultValue("https://{REGION_ENDPOINT}/queue.|api-domain|/{YOUR_ACCOUNT_NUMBER}/{YOUR_QUEUE_NAME}")]
+        public string QueueUrl { get; set; }
+
+        /// <summary>
+        /// The maximum number of messages to return. Amazon SQS never returns more messages than this value (however, fewer messages might be returned). Valid values: 1 to 10. 
+        /// </summary>
+        [DisplayFormat(DataFormatString = "Text")]
+        [DefaultValue("1")]
+        public int MaxNumberOfMessages { get; set; }
+    }
+
+    /// <summary>
+    /// Receive options
+    /// </summary>
+    [DisplayName("Options")]
+    public class ReceiveOptions
+    { 
+        /// <summary>
+        /// Delete message(s) from queue after receiving it 
+        /// </summary>
+        [DefaultValue(true)]
+        public bool DeleteMessageAfterReceiving { get; set; }
+
+        /// <summary>
+        /// The duration (in seconds) that the received messages are hidden from subsequent retrieve requests after being retrieved by a ReceiveMessage request. 
+        /// </summary>
+        [DefaultValue(30)]
+        public int VisibilityTimeout { get; set; }
+
+        /// <summary>
+        /// The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds. If no messages are available and the wait time expires, the call returns successfully with an empty list of messages. 
+        /// </summary>
+        [DefaultValue(0)]
+        public int WaitTimeSeconds { get; set; }
     }
 
     #region Enumerations

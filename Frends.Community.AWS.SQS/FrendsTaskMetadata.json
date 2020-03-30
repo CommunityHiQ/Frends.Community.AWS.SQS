@@ -1,6 +1,9 @@
 ﻿{
 	"Tasks": [
 		{
+			"TaskMethod": "Frends.Community.AWS.SQS.SQS.ReceiveMessage"
+		},
+		{
 			"TaskMethod": "Frends.Community.AWS.SQS.SQS.SendMessage"
 		},
 		{
