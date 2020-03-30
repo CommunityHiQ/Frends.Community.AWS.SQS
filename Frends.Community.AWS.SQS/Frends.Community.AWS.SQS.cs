@@ -124,14 +124,33 @@ namespace Frends.Community.AWS.SQS
         }
 
         /// <summary>
+        /// Delete message using ReceiptHandle
+        /// </summary>
+        /// <param name="input">Delete parameters</param>
+        /// <param name="awsOptions">AWS options</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>DeleteMessageResponse</returns>
+        public static async Task<dynamic> DeleteMessage([PropertyTab] DeleteParameters input, [PropertyTab] AWSOptions awsOptions, CancellationToken cancellationToken)
+        {
+            var sqsClient = GetAmazonSQSClient(awsOptions.UseDefaultCredentials, awsOptions.AWSCredentials, awsOptions.Region);
+
+            var delRequest = new DeleteMessageRequest
+            {
+                QueueUrl = input.QueueUrl,
+                ReceiptHandle = input.ReceiptHandle
+            };
+
+            return await sqsClient.DeleteMessageAsync(delRequest, cancellationToken);
+        }
+
+        /// <summary>
         /// Get basic set of credentials consisting of an AccessKey and SecretKey 
         /// </summary>
-        /// <param name="accessKey">Access key</param>
-        /// <param name="secretKey">Secret key</param>
+        /// <param name="options">Input</param>
         /// <returns></returns>
-        public static dynamic GetBasicAWSCredentials(string accessKey, [PasswordPropertyText] string secretKey)
+        public static dynamic GetBasicAWSCredentials(CredentialsParameters options)
         {
-            return new BasicAWSCredentials(accessKey, secretKey);
+            return new BasicAWSCredentials(options.AccessKey, options.SecretKey);
         }
 
         private static RegionEndpoint RegionSelection(Regions region)

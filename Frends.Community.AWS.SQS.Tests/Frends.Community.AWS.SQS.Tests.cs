@@ -12,6 +12,7 @@ namespace Frends.Community.AWS.SQS.Tests
         private string secretKey;
         private string queueURL;
         private Regions region;
+        private CredentialsParameters credParams;
 
         [SetUp]
         public void Init()
@@ -20,6 +21,13 @@ namespace Frends.Community.AWS.SQS.Tests
             secretKey = GetConfigValue("AWS.SQS.aws_secret_access_key");
             queueURL = GetConfigValue("AWS.SQS.aws_sqs_queue");
             region = (Regions)int.Parse(GetConfigValue("AWS.SQS.aws_sqs_region"));
+
+            credParams = new CredentialsParameters
+            {
+                AccessKey = accessKey,
+                SecretKey = secretKey
+            };
+
         }
 
         /// <summary>
@@ -28,8 +36,13 @@ namespace Frends.Community.AWS.SQS.Tests
         [Test]
         [Order(1)]
         public void SendMessage()
-        {
+        {           
+            var ret = SendTestMessage();
+            Assert.IsTrue(((SendMessageResponse)ret).HttpStatusCode == System.Net.HttpStatusCode.OK);
+        }
 
+        private SendMessageResponse SendTestMessage()
+        {
             var input = new SendParameters
             {
                 QueueUrl = queueURL,
@@ -41,25 +54,31 @@ Datetime: {DateTime.Now.ToString("o")}
             var options = new SendOptions
             {
                 DelaySeconds = 0,
-                MessageDeduplicationId = queueURL.Contains(".fifo") ?  Guid.NewGuid().ToString() : "", // FIFO, ContentBasedDeduplication disabled
+                MessageDeduplicationId = queueURL.Contains(".fifo") ? Guid.NewGuid().ToString() : "", // FIFO, ContentBasedDeduplication disabled
                 MessageGroupId = queueURL.Contains(".fifo") ? "1" : ""            // FIFO
             };
 
             var awsOptions = new AWSOptions
             {
-                AWSCredentials = SQS.GetBasicAWSCredentials(accessKey, secretKey),
+                AWSCredentials = SQS.GetBasicAWSCredentials(credParams),
                 UseDefaultCredentials = false,
                 Region = region
             };
 
-            var ret = SQS.SendMessage(input, options, awsOptions, new System.Threading.CancellationToken());
-
-            Assert.IsTrue(((SendMessageResponse)ret.Result).HttpStatusCode == System.Net.HttpStatusCode.OK);
+            return SQS.SendMessage(input, options, awsOptions, new System.Threading.CancellationToken()).Result;
         }
 
         [Test]
         [Order(2)]
         public void ReceiveMessage()
+        {
+            ReceiveMessageResponse receiveResponse = ReceiveTestMessage();
+
+            Assert.IsTrue(receiveResponse.Messages.Count == 1);
+
+        }
+
+        private ReceiveMessageResponse ReceiveTestMessage()
         {
             var input = new ReceiveParameters
             {
@@ -76,17 +95,41 @@ Datetime: {DateTime.Now.ToString("o")}
 
             var awsOptions = new AWSOptions
             {
-                AWSCredentials = SQS.GetBasicAWSCredentials(accessKey, secretKey),
+                AWSCredentials = SQS.GetBasicAWSCredentials(credParams),
                 UseDefaultCredentials = false,
                 Region = region
             };
 
-            var ret = SQS.ReceiveMessage(input, options, awsOptions, new System.Threading.CancellationToken());
+            return SQS.ReceiveMessage(input, options, awsOptions, new System.Threading.CancellationToken()).Result;
+        }
 
-            ReceiveMessageResponse receiveResponse = ret.Result;
+        [Test]
+        [Order(3)]
+        public void DeleteMessage()
+        {
+            var ret = SendTestMessage();
+            Assert.IsTrue(ret.HttpStatusCode == System.Net.HttpStatusCode.OK);
 
-            Assert.IsTrue(receiveResponse.Messages.Count == 1);
+            var rec = ReceiveTestMessage();
+            Assert.IsTrue(rec.HttpStatusCode == System.Net.HttpStatusCode.OK);
+            Assert.IsTrue(rec.Messages.Count > 0);
 
+            var input = new DeleteParameters
+            {
+                QueueUrl = queueURL,
+                ReceiptHandle = rec.Messages[0].ReceiptHandle
+            };
+
+            var awsOptions = new AWSOptions
+            {
+                AWSCredentials = SQS.GetBasicAWSCredentials(credParams),
+                UseDefaultCredentials = false,
+                Region = region
+            };
+
+            var delres = SQS.DeleteMessage(input, awsOptions, new System.Threading.CancellationToken()).Result;
+
+            Assert.IsTrue(delres.HttpStatusCode == System.Net.HttpStatusCode.OK);
         }
 
         /// <summary>

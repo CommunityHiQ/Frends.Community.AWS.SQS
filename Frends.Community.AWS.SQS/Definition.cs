@@ -109,7 +109,7 @@ namespace Frends.Community.AWS.SQS
     /// </summary>
     [DisplayName("Options")]
     public class ReceiveOptions
-    { 
+    {
         /// <summary>
         /// Delete message(s) from queue after receiving it 
         /// </summary>
@@ -127,6 +127,41 @@ namespace Frends.Community.AWS.SQS
         /// </summary>
         [DefaultValue(0)]
         public int WaitTimeSeconds { get; set; }
+    }
+
+    /// <summary>
+    /// Delete message parameters
+    /// </summary>
+    [DisplayName("Parameters")]
+    public class DeleteParameters
+    {
+        /// <summary>
+        /// Queue url.
+        /// Examples: https://{REGION_ENDPOINT}/queue.|api-domain|/{YOUR_ACCOUNT_NUMBER}/{YOUR_QUEUE_NAME}
+        /// </summary>
+        [DisplayFormat(DataFormatString = "Text")]
+        [DefaultValue("https://{REGION_ENDPOINT}/queue.|api-domain|/{YOUR_ACCOUNT_NUMBER}/{YOUR_QUEUE_NAME}")]
+        public string QueueUrl { get; set; }
+
+        /// <summary>
+        ///  The receipt handle associated with the message to delete. 
+        /// </summary>
+        [DisplayFormat(DataFormatString = "Expression")]
+        [DefaultValue("712c4c5f-982a-40c5-becb-9b7d0539734e")]
+        public string ReceiptHandle { get; set; }
+    }
+    /// <summary>
+    /// AWS Credentials parameters
+    /// </summary>
+    [DisplayName("Parameters")]
+    public class CredentialsParameters
+    {
+        [DisplayFormat(DataFormatString = "Expression")]
+        public string AccessKey { get; set; }
+
+        [DisplayFormat(DataFormatString = "Expression")]
+        [PasswordPropertyText]
+        public string SecretKey { get; set; }
     }
 
     #region Enumerations

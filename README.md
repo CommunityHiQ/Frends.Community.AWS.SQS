@@ -44,6 +44,39 @@ Use return value later for task inputs.
 `#result`
 
 
+## DeleteMessage
+
+Deletes the specified message from the specified queue.
+
+### Parameters
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| QueueUrl  | `string` | Queue URL | `https://sqs.us-east-2.amazonaws.com/1234567890123/Test1.fifo` |
+| ReceiptHandle  | `string` | The receipt handle associated with the message to delete.  | `712c4c5f-982a-40c5-becb-9b7d0539734e` |
+
+
+### AWSOptions
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| Region | `enum` | Region selection, default EUNorth1. Undefined doesn't select region. | `1` |
+| UseDefaultCredentials | `bool` |  Credentials are loaded from the application's default configuration, and if unsuccessful from the Instance Profile service on an EC2 instance.  | false |
+| AWSCredentials | `dynamic` | AWSCredentials class instance. See https://docs.aws.amazon.com/sdkfornet1/latest/apidocs/html/T_Amazon_Runtime_AWSCredentials.htm. Can be null (see UseDefaultCredentials)  | `#result[GetBasicAWSCredentials]` |
+
+### Returns
+
+A ReceiveMessageResponse object instance
+
+| Property | Type | Description | Example |
+| -------- | -------- | -------- | -------- |
+| DeleteMessageResponse | `dynamic` | See https://docs.aws.amazon.com/sdkfornet/v3/apidocs/items/SQS/TDeleteMessageResponse.html |  |
+
+Usage:
+Convert return value to JToken and use properties:
+
+`JToken.FromObject(#result)`, `#var.varJToken["HttpStatusCode"]`
+
 ## ReceiveMessage
 
 Receives message(s) from the AWS SQS queue.
@@ -59,7 +92,7 @@ Receives message(s) from the AWS SQS queue.
 
 | Property | Type | Description | Example |
 | -------- | -------- | -------- | -------- |
-| DeleteMessageAfterReceiving | `bool` | Delete message(s) from queue after receiving it   | `true` |
+| DeleteMessageAfterReceiving | `bool` | Delete message(s) from queue after receiving it. | `true` |
 | VisibilityTimeout | `int` |  The duration (in seconds) that the received messages are hidden from subsequent retrieve requests after being retrieved by a ReceiveMessage request.   | `45678` |
 | WaitTimeSeconds | `int` | The duration (in seconds) for which the call waits for a message to arrive in the queue before returning. If a message is available, the call returns sooner than WaitTimeSeconds. If no messages are available and the wait time expires, the call returns successfully with an empty list of messages.  | `0` |
 
