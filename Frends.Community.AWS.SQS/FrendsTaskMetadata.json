@@ -1,6 +1,9 @@
 ﻿{
 	"Tasks": [
 		{
+			"TaskMethod": "Frends.Community.AWS.SQS.SQS.DeleteMessage"
+		},
+		{
 			"TaskMethod": "Frends.Community.AWS.SQS.SQS.ReceiveMessage"
 		},
 		{
