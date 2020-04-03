@@ -1,7 +1,16 @@
-{
-  "Tasks": [
-    {
-      "TaskMethod": "Frends.Community.AWS.SQS.Tasks.SendMessage",
-    }
-  ]
+﻿{
+	"Tasks": [
+		{
+			"TaskMethod": "Frends.Community.AWS.SQS.SQS.DeleteMessage"
+		},
+		{
+			"TaskMethod": "Frends.Community.AWS.SQS.SQS.ReceiveMessage"
+		},
+		{
+			"TaskMethod": "Frends.Community.AWS.SQS.SQS.SendMessage"
+		},
+		{
+			"TaskMethod": "Frends.Community.AWS.SQS.SQS.GetBasicAWSCredentials"
+		}
+	]
 }

@@ -1,23 +1,16 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29613.14
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frends.Community.AWS.SQS.Tests", "Frends.Community.AWS.SQS.Tests\Frends.Community.AWS.SQS.Tests.csproj", "{56768113-F0F5-4F4B-BD62-A37EC863FDAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frends.Community.AWS.SQS", "Frends.Community.AWS.SQS\Frends.Community.AWS.SQS.csproj", "{35C305C0-8108-4A98-BB1D-AFE5C926239E}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution items", "Solution items", "{B8D1CCE0-861D-4293-9104-60D56ED2907F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frends.Community.AWS.SQS.Tests", "Frends.Community.AWS.SQS.Tests\Frends.Community.AWS.SQS.Tests.csproj", "{8CA92187-8E4F-4414-803B-EC899479022E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{78F7F22E-6E20-4BCE-8362-0C558568B729}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
-		Frends.Community.AWS.SQS\FrendsTaskMetadata.json = Frends.Community.AWS.SQS\FrendsTaskMetadata.json
-		LICENSE = LICENSE
 		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Frends.Community.AWS.SQS", "Frends.Community.AWS.SQS\Frends.Community.AWS.SQS.csproj", "{FCACA2AC-05A9-40E5-9A20-2B55E10075A2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nuspec", "nuspec", "{F25A1CBD-321B-445D-B6EA-631118B84CA1}"
-	ProjectSection(SolutionItems) = preProject
-		nuspec\Frends.Community.AWS.SQS.nuspec = nuspec\Frends.Community.AWS.SQS.nuspec
 	EndProjectSection
 EndProject
 Global
@@ -26,22 +19,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{56768113-F0F5-4F4B-BD62-A37EC863FDAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{56768113-F0F5-4F4B-BD62-A37EC863FDAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{56768113-F0F5-4F4B-BD62-A37EC863FDAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{56768113-F0F5-4F4B-BD62-A37EC863FDAE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCACA2AC-05A9-40E5-9A20-2B55E10075A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCACA2AC-05A9-40E5-9A20-2B55E10075A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCACA2AC-05A9-40E5-9A20-2B55E10075A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCACA2AC-05A9-40E5-9A20-2B55E10075A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{35C305C0-8108-4A98-BB1D-AFE5C926239E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{35C305C0-8108-4A98-BB1D-AFE5C926239E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{35C305C0-8108-4A98-BB1D-AFE5C926239E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{35C305C0-8108-4A98-BB1D-AFE5C926239E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CA92187-8E4F-4414-803B-EC899479022E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CA92187-8E4F-4414-803B-EC899479022E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CA92187-8E4F-4414-803B-EC899479022E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CA92187-8E4F-4414-803B-EC899479022E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{F25A1CBD-321B-445D-B6EA-631118B84CA1} = {B8D1CCE0-861D-4293-9104-60D56ED2907F}
-	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {075A9431-0195-46CD-9DF6-3CD2782FBFC6}
+		SolutionGuid = {55BC6629-85C9-48D8-8CA2-B0046AF1AF4B}
 	EndGlobalSection
 EndGlobal
