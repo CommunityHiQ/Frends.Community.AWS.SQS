@@ -193,4 +193,4 @@ NOTE: Be sure to merge the latest from "upstream" before making a pull request!
 
 | Version | Changes |
 | ------- | ------- |
-| 1.0.0   | First multiplatform version |
+| 1.0.0   | First multiplatform version | 
