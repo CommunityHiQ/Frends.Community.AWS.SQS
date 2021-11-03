@@ -17,6 +17,11 @@ jobs:
       run: dotnet build
     
     - name: Test
+      env:
+        AWS.SQS.aws_access_key_id: ${{ secrets.AWS_SQS_aws_access_key_id }}
+        AWS.SQS.aws_secret_access_key: ${{ secrets.AWS_SQS_aws_secret_access_key }}
+        AWS.SQS.aws_sqs_queue: ${{ secrets.AWS_SQS_aws_sqs_queue }}
+        AWS.SQS.aws_sqs_region: ${{ secrets.AWS_SQS_aws_sqs_region }}
       run: dotnet test
       
     - name: Pack release version of task
